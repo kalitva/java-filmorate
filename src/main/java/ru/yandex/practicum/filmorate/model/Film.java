@@ -1,5 +1,7 @@
 package ru.yandex.practicum.filmorate.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDate;
 
 import javax.validation.constraints.NotBlank;
@@ -23,6 +25,7 @@ public class Film {
 
     @NotNull
     @After(FILMS_BIRTHDAY)
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate releaseDate;
 
     @Positive
