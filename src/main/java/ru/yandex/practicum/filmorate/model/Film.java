@@ -13,7 +13,7 @@ import ru.yandex.practicum.filmorate.validator.After;
 
 @Data
 public class Film {
-    private static final String FILMS_BIRTHDAY = "1885-12-28";
+    private static final String FILMS_BIRTHDAY = "1895-12-28";
 
     private Long id;
 
