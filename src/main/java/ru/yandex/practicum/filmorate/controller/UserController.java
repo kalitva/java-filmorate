@@ -32,7 +32,7 @@ public class UserController {
     }
 
     @PostMapping
-    public User addFilm(@Valid @RequestBody User user) {
+    public User addUser(@Valid @RequestBody User user) {
         long id = ++nextId;
         log.info("adding a new user");
         user.setId(id);
@@ -42,7 +42,7 @@ public class UserController {
     }
 
     @PutMapping
-    public User updateFilm(@Valid @RequestBody User user) {
+    public User updateUser(@Valid @RequestBody User user) {
         if (!users.containsKey(user.getId())) {
             throw new NotFoundException("user not found, id " + user.getId());
         }
