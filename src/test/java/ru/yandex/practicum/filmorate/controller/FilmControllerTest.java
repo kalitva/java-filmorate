@@ -15,26 +15,21 @@ import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.mockito.InjectMocks;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import ru.yandex.practicum.filmorate.model.Film;
 
-@ExtendWith(MockitoExtension.class)
 class FilmControllerTest {
     private final ObjectMapper objectMapper = new ObjectMapper()
             .registerModule(new JavaTimeModule());
 
     private MockMvc mockMvc;
 
-    @InjectMocks
-    private FilmController filmController;
+    private FilmController filmController = new FilmController();
 
     @BeforeEach
     void setMockMvc() {
@@ -58,10 +53,10 @@ class FilmControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
-    @MethodSource("provideInvalidFilms")
-    void create_shouldResponseWithNotFound_ifFilmDoseNotExist() throws Exception {
+    @Test
+    void update_shouldResponseWithNotFound_ifFilmDoseNotExist() throws Exception {
         String json = objectMapper.writeValueAsString(film(f -> f.setId(1000L)));
-        mockMvc.perform(post("/films").contentType("application/json").content(json))
+        mockMvc.perform(put("/films").contentType("application/json").content(json))
                 .andExpect(status().isNotFound());
     }
 

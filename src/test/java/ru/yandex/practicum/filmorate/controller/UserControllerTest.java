@@ -15,27 +15,21 @@ import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.mockito.InjectMocks;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import ru.yandex.practicum.filmorate.model.User;
-//import ru.yandex.practicum.filmorate.service.UserService;
 
-@ExtendWith(MockitoExtension.class)
 class UserControllerTest {
     private final ObjectMapper objectMapper = new ObjectMapper()
             .registerModule(new JavaTimeModule());
 
     private MockMvc mockMvc;
 
-    @InjectMocks
-    private UserController userController;
+    private UserController userController = new UserController();
 
     @BeforeEach
     void setMockMvc() {
@@ -57,6 +51,13 @@ class UserControllerTest {
                 .andExpect(status().isBadRequest());
         mockMvc.perform(put("/users").contentType("application/json").content(json))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void update_shouldResponseWithNotFound_ifUserDoseNotExist() throws Exception {
+        String json = objectMapper.writeValueAsString(user(u -> u.setId(1000L)));
+        mockMvc.perform(put("/users").contentType("application/json").content(json))
+                .andExpect(status().isNotFound());
     }
 
     private static Stream<Arguments> provideInvalidUsers() {
