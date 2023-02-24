@@ -31,7 +31,7 @@ public class InMemoryUserStorage implements UserStorage {
 
     @Override
     public User create(User user) {
-        long id = nextId++;
+        long id = ++nextId;
         user.setId(id);
         users.put(id, user);
         return user;
