@@ -49,6 +49,7 @@ public class UserService {
             throw new NotFoundException("User '" + id + "' does not exist");
         }
         userStorage.findById(id).addFriendId(friendId);
+        userStorage.findById(friendId).addFriendId(id);
     }
 
     public void deleteFriend(long id, long friendId) {
