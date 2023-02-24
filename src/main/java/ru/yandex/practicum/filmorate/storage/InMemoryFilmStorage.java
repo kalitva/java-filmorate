@@ -11,7 +11,7 @@ import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.validator.NotFoundException;
 
 @Component
-public class FilmStorageImpl implements FilmStorage {
+public class InMemoryFilmStorage implements FilmStorage {
     private long nextId;
 
     private final Map<Long, Film> films = new HashMap<>();
