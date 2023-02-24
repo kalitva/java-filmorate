@@ -23,7 +23,7 @@ public class UserService {
     }
 
     public User getUser(long id) {
-        return userStorage.getById(id);
+        return userStorage.findById(id);
     }
 
     public List<User> getAll() {
@@ -45,33 +45,33 @@ public class UserService {
 
     public void addFriend(long id, long friendId) {
         log.info("user '{}' adding a new friend '{}'", id, friendId);
-        if (userStorage.getById(friendId) == null) {
+        if (userStorage.findById(friendId) == null) {
             throw new NotFoundException("User '" + id + "' does not exist");
         }
-        userStorage.getById(id).addFriendId(friendId);
+        userStorage.findById(id).addFriendId(friendId);
     }
 
     public void deleteFriend(long id, long friendId) {
         log.info("user '{}' removing a friend '{}'", id, friendId);
-        if (userStorage.getById(friendId) == null) {
+        if (userStorage.findById(friendId) == null) {
             throw new NotFoundException("User '" + id + "' does not exist");
         }
-        userStorage.getById(id).removeFriendId(friendId);
+        userStorage.findById(id).removeFriendId(friendId);
     }
 
     public List<User> getFriends(long id) {
-        return userStorage.getById(id).getFriendIds()
+        return userStorage.findById(id).getFriendIds()
                 .stream()
-                .map(userStorage::getById)
+                .map(userStorage::findById)
                 .collect(Collectors.toList());
     }
 
     public List<User> getCommonFriends(long id, long otherId) {
-        List<Long> friendIds = new ArrayList<>(userStorage.getById(id).getFriendIds());
-        Set<Long> otherFriendIds = userStorage.getById(otherId).getFriendIds();
+        List<Long> friendIds = new ArrayList<>(userStorage.findById(id).getFriendIds());
+        Set<Long> otherFriendIds = userStorage.findById(otherId).getFriendIds();
         friendIds.retainAll(otherFriendIds);
         return friendIds.stream()
-                .map(userStorage::getById)
+                .map(userStorage::findById)
                 .collect(Collectors.toList());
     }
 

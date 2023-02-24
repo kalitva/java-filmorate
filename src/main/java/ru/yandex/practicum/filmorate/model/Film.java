@@ -3,11 +3,15 @@ package ru.yandex.practicum.filmorate.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
+
 import lombok.Data;
 import ru.yandex.practicum.filmorate.validator.After;
 
@@ -30,4 +34,18 @@ public class Film {
 
     @Positive
     private long duration;
+
+    private final Set<Long> likedUserIds = new HashSet<>();
+
+    public Set<Long> getLikedUserIds() {
+        return Collections.unmodifiableSet(likedUserIds);
+    }
+
+    public void addLike(long userId) {
+        likedUserIds.add(userId);
+    }
+
+    public void removeLike(long userId) {
+        likedUserIds.remove(userId);
+    }
 }

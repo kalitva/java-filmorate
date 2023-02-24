@@ -14,7 +14,7 @@ public class InMemoryUserStorage implements UserStorage {
     private long nextId;
 
     @Override
-    public User getById(long id) {
+    public User findById(long id) {
         if (!users .containsKey(id)) {
             throw new NotFoundException("user not found, id " + id);
         }

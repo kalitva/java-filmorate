@@ -6,7 +6,7 @@ import ru.yandex.practicum.filmorate.model.User;
 
 public interface UserStorage {
 
-    User getById(long id);
+    User findById(long id);
 
     List<User> findAll();
 

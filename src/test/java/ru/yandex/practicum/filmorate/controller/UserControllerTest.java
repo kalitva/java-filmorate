@@ -128,7 +128,11 @@ class UserControllerTest {
 
     @Test
     void getFriendsTest() throws Exception {
-        mockMvc.perform(get("/users/1/friends")).andExpect(status().isOk());
+        List<User> users = List.of(user(u -> u.setId(100L)), user(u -> u.setId(200L)));
+        when(userService.getFriends(1)).thenReturn(users);
+        mockMvc.perform(get("/users/1/friends"))
+                .andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(users)));
         verify(userService).getFriends(1);
     }
 
