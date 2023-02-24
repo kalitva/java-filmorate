@@ -18,6 +18,9 @@ public class FilmStorageImpl implements FilmStorage {
 
     @Override
     public Film findById(long id) {
+        if (!films.containsKey(id)) {
+            throw new NotFoundException("film not found, id " + id);
+        }
         return films.get(id);
     }
 
