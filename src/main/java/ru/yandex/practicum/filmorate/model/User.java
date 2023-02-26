@@ -1,6 +1,9 @@
 package ru.yandex.practicum.filmorate.model;
 
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -24,4 +27,18 @@ public class User {
 
     @PastOrPresent
     private LocalDate birthday;
+
+    private final Set<Long> friendIds = new HashSet<>();
+
+    public void addFriendId(long friendId) {
+        friendIds.add(friendId);
+    }
+
+    public void removeFriendId(long friendId) {
+        friendIds.remove(friendId);
+    }
+
+    public Set<Long> getFriendIds() {
+        return Collections.unmodifiableSet(friendIds);
+    }
 }
